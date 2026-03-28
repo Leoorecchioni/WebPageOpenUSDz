@@ -116,17 +116,12 @@
     </div>
 
     <div class="container">
-        <h2>Caméléon — variantes &amp; animation</h2>
+        <h2>Caméléon | variantes &amp; animation</h2>
         <p>Modèle avec plusieurs teintes (variantes de matériaux) et animation. AR : glissez l’aperçu hors de la fenêtre sur visionOS.</p>
 
         <a href="chameleon_anim_mtl_variant.usdz" rel="ar">
             <img class="ar-thumbnail" src="chameleon-thumb_2x.png" alt="Aperçu caméléon AR">
         </a>
-
-        <p class="mv-hint">
-            <strong>Prévisualisation dans le navigateur :</strong> <code>&lt;model-viewer&gt;</code> charge un <strong>GLB</strong> (glTF) pour le canvas ; l’USDZ sert surtout à l’AR Quick Look (<code>ios-src</code>). Placez donc un fichier
-            <code>chameleon_anim_mtl_variant.glb</code> au même nom que l’USDZ (export depuis le même projet : mêmes variantes de matériaux et mêmes animations).
-        </p>
 
         <p id="chameleon-load-error" class="mv-hint" hidden style="color:#c41e3a;">
             Le GLB est introuvable ou invalide. Utilisez le lien image ci-dessus pour l’AR en USDZ, ou ajoutez le fichier GLB exporté.
@@ -144,16 +139,6 @@
             animation-crossfade-duration="400"
             ar
             ar-modes="webxr scene-viewer quick-look">
-            <div class="mv-controls">
-                <label>
-                    Teinte
-                    <select slot="variant"></select>
-                </label>
-                <label>
-                    Animation
-                    <select slot="animation"></select>
-                </label>
-            </div>
         </model-viewer>
     </div>
 
