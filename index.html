@@ -3,155 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Vision Pro - Drag & Drop 3D</title>
+    <title>OpenUSDZ | Vision Pro 3D Platform</title>
 
+    <!-- Model Viewer Support -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
+        :root {
+            --apple-bg: #f5f5f7;
+            --apple-text: #1d1d1f;
+            --apple-subtext: #86868b;
+            --apple-blue: #0066cc;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.72);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
         }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #86868b;
-            margin-bottom: 40px;
-        }
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        /* Style pour l'image de la Méthode A */
-        .ar-thumbnail {
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
             width: 100%;
-            max-width: 300px;
-            border-radius: 12px;
-            transition: transform 0.2s;
-        }
-        .ar-thumbnail:hover {
-            transform: scale(1.02);
-            cursor: pointer;
-        }
-        /* Style pour le lecteur 3D de la Méthode B */
-        model-viewer {
-            width: 100%;
-            height: 400px;
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            --poster-color: transparent;
-        }
-        #chameleon-viewer {
-            height: 440px;
-        }
-        .mv-controls {
+            height: 44px;
+            background: var(--glass-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 9999;
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
             justify-content: center;
             align-items: center;
-            margin-top: 16px;
-            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
-        .mv-controls label {
+
+        nav .nav-content {
+            width: 100%;
+            max-width: 1024px;
+            padding: 0 22px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            color: #424245;
         }
-        .mv-controls select {
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #d2d2d7;
-            background: #fff;
-            font-size: 0.9rem;
-            max-width: min(280px, 100%);
+
+        nav a {
+            text-decoration: none;
+            color: var(--apple-text);
+            font-size: 12px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
         }
-        .mv-hint {
-            font-size: 0.85rem;
-            color: #86868b;
-            margin-top: 12px;
-            line-height: 1.45;
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        nav .logo {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1024px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero {
+            padding-top: 120px;
+        }
+
+        h1 {
+            font-size: 56px;
+            line-height: 1.07143;
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--apple-subtext);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Model Viewer Styles */
+        .viewer-container {
+            width: 100%;
+            height: 600px;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            --poster-color: transparent;
+        }
+
+        /* Converter Section */
+        .converter {
+            background: #000;
+            color: #fff;
+            border-radius: 40px;
+            margin: 40px auto;
+            padding: 100px 40px;
+            overflow: hidden;
+        }
+
+        .converter h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .drop-zone {
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 60px;
+            margin-top: 40px;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .drop-zone:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--apple-blue);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* Grid for other models */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--apple-subtext);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .small-viewer {
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            background: #f9f9f9;
+        }
+
+        .ar-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .ar-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--apple-subtext);
+            font-size: 14px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 40px; }
+            .hero p { font-size: 20px; }
+            .viewer-container { height: 400px; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Test AR - Apple Vision Pro</h1>
-    <p>Ouvrez cette page sur Safari visionOS, pincez l'objet et tirez-le hors de la fenêtre !</p>
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">OpenUSDZ</a>
+            <div class="links">
+                <a href="#viewer" style="margin-right: 20px;">Viewer</a>
+                <a href="#converter">Converter</a>
+            </div>
+        </div>
+    </nav>
 
-    <div class="container">
-        <h2>Méthode 1 : Lien Direct</h2>
-        <p>Un simple clic ou drag-and-drop depuis cette image.</p>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="viewer">
+            <h1>3D for the Vision Pro era.</h1>
+            <p>Experience high-fidelity OpenUSDZ models directly in your browser or spatial environment.</p>
 
-        <model src="fender_stratocaster.usdz">
-            <model-viewer src="fender_stratocaster.glb"></model-viewer>
-        </model>
-    </div>
+            <div class="viewer-container">
+                <model-viewer
+                    src="fender_stratocaster.glb"
+                    ios-src="fender_stratocaster.usdz"
+                    poster="stratocaster.jpg"
+                    alt="Fender Stratocaster 3D Model"
+                    shadow-intensity="1"
+                    camera-controls
+                    auto-rotate
+                    ar
+                    ar-modes="webxr scene-viewer quick-look">
+                    <button slot="ar-button" style="background-color: white; border-radius: 8px; border: none; position: absolute; top: 16px; right: 16px; padding: 10px 20px; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        View in AR
+                    </button>
+                </model-viewer>
+            </div>
+        </section>
 
-    <div class="container">
-        <h2>Méthode 2 : Model-Viewer</h2>
-        <p>Vous pouvez tourner l'objet ici, ou le drag-and-drop dans votre espace.</p>
+        <!-- Converter Section -->
+        <section class="converter" id="converter">
+            <span class="badge">COMING SOON</span>
+            <h2>Universal 3D to OpenUSDZ</h2>
+            <p style="color: #86868b; font-size: 20px;">Drag and drop any .glb, .obj, or .fbx to convert it instantly for visionOS.</p>
 
-        <model-viewer
-            src="fender_stratocaster.glb"
-            ios-src="fender_stratocaster.usdz"
-            poster="stratocaster.jpg"
-            alt="Modèle 3D interactif"
-            shadow-intensity="1"
-            camera-controls
-            auto-rotate
-            ar>
-        </model-viewer>
-    </div>
+            <div class="drop-zone" onclick="alert('Feature coming soon! This will be the conversion portal.')">
+                <div style="font-size: 48px; margin-bottom: 20px;">📦</div>
+                <p style="font-size: 18px; font-weight: 500;">Drop your 3D files here</p>
+                <p style="font-size: 14px; opacity: 0.6; margin-top: 10px;">Maximum file size: 500MB</p>
+            </div>
+        </section>
 
-    <div class="container">
-        <h2>Caméléon | variantes &amp; animation</h2>
-        <p>Modèle avec plusieurs teintes (variantes de matériaux) et animation. AR : glissez l’aperçu hors de la fenêtre sur visionOS.</p>
+        <!-- Gallery Section -->
+        <section class="gallery">
+            <h2 style="font-size: 40px; margin-bottom: 40px;">Explore Models</h2>
+            
+            <div class="grid">
+                <!-- Chameleon Card -->
+                <div class="card">
+                    <h3>Chameleon</h3>
+                    <p>Animated model with material variants. Perfect for testing spatial interactions.</p>
+                    <div class="small-viewer">
+                        <model-viewer
+                            src="chameleon_anim_mtl_variant.glb"
+                            ios-src="chameleon_anim_mtl_variant.usdz"
+                            poster="chameleon-thumb_2x.png"
+                            alt="Chameleon 3D Model"
+                            shadow-intensity="1"
+                            camera-controls
+                            autoplay
+                            ar>
+                        </model-viewer>
+                    </div>
+                    <a href="chameleon_anim_mtl_variant.usdz" rel="ar" class="ar-link">
+                        Open in Quick Look →
+                    </a>
+                </div>
 
-        <a href="chameleon_anim_mtl_variant.usdz" rel="ar">
-            <img class="ar-thumbnail" src="chameleon-thumb_2x.png" alt="Aperçu caméléon AR">
-        </a>
+                <!-- Feature Card -->
+                <div class="card" style="background: #f5f5f7; box-shadow: none;">
+                    <h3>Built for visionOS</h3>
+                    <p>Optimized for Apple Vision Pro with support for real-world scaling and lighting.</p>
+                    <div style="font-size: 60px; margin-top: 20px;">🥽</div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <p id="chameleon-load-error" class="mv-hint" hidden style="color:#c41e3a;">
-            Le GLB est introuvable ou invalide. Utilisez le lien image ci-dessus pour l’AR en USDZ, ou ajoutez le fichier GLB exporté.
-        </p>
+    <footer>
+        <p>&copy; 2026 OpenUSDZ Platform. Apple, Vision Pro, and visionOS are trademarks of Apple Inc.</p>
+    </footer>
 
-        <model-viewer
-            id="chameleon-viewer"
-            src="chameleon_anim_mtl_variant.glb"
-            ios-src="chameleon_anim_mtl_variant.usdz"
-            poster="chameleon-thumb_2x.png"
-            alt="Caméléon 3D — variantes et animation"
-            shadow-intensity="1"
-            camera-controls
-            autoplay
-            animation-crossfade-duration="400"
-            ar
-            ar-modes="webxr scene-viewer quick-look">
-        </model-viewer>
-    </div>
-
-    <script type="module">
-        const mv = document.getElementById('chameleon-viewer');
-        const err = document.getElementById('chameleon-load-error');
-        if (mv && err) {
-            mv.addEventListener('error', () => {
-                err.hidden = false;
-                mv.style.display = 'none';
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
-        }
+        });
     </script>
-
 </body>
 </html>
