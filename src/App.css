@@ -1,0 +1,240 @@
+:root {
+  --apple-bg: #ffffff;
+  --apple-bg-alt: #f5f5f7;
+  --apple-text: #1d1d1f;
+  --apple-subtext: #86868b;
+  --apple-blue: #0066cc;
+  --apple-blue-hover: #0071e3;
+  --nav-height: 52px;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  --border-radius: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background: var(--apple-bg);
+  color: var(--apple-text);
+  line-height: 1.47059;
+  letter-spacing: -0.022em;
+}
+
+/* HEADER / NAV */
+.nav-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  z-index: 9999;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.nav-content {
+  width: 100%;
+  max-width: 1024px;
+  padding: 0 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-weight: 600;
+  font-size: 21px;
+  text-decoration: none;
+  color: var(--apple-text);
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--apple-text);
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  opacity: 1;
+}
+
+/* PAGES CONTAINER */
+.page-container {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+}
+
+/* HERO SECTION */
+.hero-section {
+  padding: 80px 22px;
+  text-align: center;
+  max-width: 980px;
+  margin: auto;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.07143;
+  margin-bottom: 16px;
+  letter-spacing: -0.005em;
+}
+
+.hero-subtitle {
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--apple-subtext);
+  margin-bottom: 40px;
+}
+
+/* CARDS & GRID */
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+  padding: 40px 22px;
+  max-width: 1024px;
+  margin: auto;
+}
+
+.pro-card {
+  background: var(--apple-bg-alt);
+  border-radius: var(--border-radius);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-height: 480px;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.pro-card:hover {
+  transform: scale(1.02);
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--apple-subtext);
+  margin-bottom: 30px;
+}
+
+.viewer-wrapper {
+  flex-grow: 1;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* UPLOAD UI */
+.upload-hero {
+  border: 2px dashed #d2d2d7;
+  border-radius: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  background: white;
+}
+
+.upload-button {
+  background: var(--apple-blue);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+/* FOOTER PROFESSIONAL */
+.footer {
+  background: var(--apple-bg-alt);
+  padding: 80px 22px 40px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  margin-top: 100px;
+}
+
+.footer-content {
+  max-width: 1024px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  text-align: left;
+}
+
+.footer-column h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: var(--apple-text);
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: var(--apple-subtext);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-column ul li a:hover {
+  color: var(--apple-blue);
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  max-width: 1024px;
+  margin: 60px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--apple-subtext);
+}
+
+.footer-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
